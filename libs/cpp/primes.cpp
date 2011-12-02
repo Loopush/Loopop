@@ -1,3 +1,7 @@
+/*
+ * Written by Theodosis "ted" Sourgkounis.
+ * inspired by Dionysis "dionyziz" Zindros.
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -46,7 +50,6 @@ int main(){
             if( i * i < estimate ){
                 primes[ count ] = i;
             }
-            
             last = i;
             ++count;
         }
@@ -60,8 +63,6 @@ int main(){
     lapsed.tv_usec = t2.tv_usec - t1.tv_usec;
     lapsed.tv_sec = (int) ( t2.tv_sec - t1.tv_sec );
     printf("Time elapsed: %d.%06dsec\n", (int)lapsed.tv_sec, (int)lapsed.tv_usec);  
-    
-    
     cout << last << endl;
     return 0;
 }
