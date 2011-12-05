@@ -90,16 +90,18 @@ public:
 		//Up and left.
 		for(int i = x-1; i >=0; i--)
 		{
-			if(y -x + i < 0)
+			int _y = y -x +i;
+			if(_y< 0)
 				continue;
-			if(env->board[i][y-x+i]!=0)
+			if(env->board[i][_y]!=0)
 				return false;
 		}
 
 		//Down left.
 		for(int i = x-1; i >=0; i--)
 		{
-			if(y+x-i>=8)
+			int _y = y + x -i;
+			if(_y >= 8)
 				continue;
 			if(env->board[i][y+x-i]!=0)
 				return false;
@@ -109,9 +111,10 @@ public:
 		//Down right.
 		for(int i = x+1; i < size; i++)
 		{
-			if(y-x+i >=8)
+			int _y = y -x+i;
+			if(_y >=8)
 				continue;
-			if(env->board[i][y-x+i]!=0)
+			if(env->board[i][_y]!=0)
 				return false;
 		}
 
@@ -121,7 +124,8 @@ public:
 		{
 			if(env->board[i][y+x-i]!=0)
 			{
-				if(y+x -i < 0)
+				int _y = y + x - i;
+				if(_y < 0)
 					continue;
 				return false;
 			}

@@ -41,7 +41,9 @@ public:
 
 		if(action->doAction(env))
 		{
-			for(u_int i = 0; i < actions.size(); i++)
+			u_int size = actions.size();
+
+			for(u_int i = 0; i < size; i++)
 			{
 				AbstractAction nextAction = actions[i];
 
