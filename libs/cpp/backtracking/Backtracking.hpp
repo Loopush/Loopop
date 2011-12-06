@@ -26,7 +26,7 @@ public:
 class AbstractEnv
 {
 public:
-	virtual void isSolved() = 0;
+	virtual bool isSolved() = 0;
 };
 
 template<class Env, class AbstractAction> class Proccessor

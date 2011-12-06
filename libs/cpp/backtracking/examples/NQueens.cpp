@@ -21,11 +21,11 @@ public:
 
 	vector<vector<int> > board;
 
-	Env()
+	Env(int size)
 	{
-		queensRemaining = 8;
+		queensRemaining = size;
 
-		boardSize = 8;
+		boardSize = size;
 
 		board.resize(boardSize);
 
@@ -46,9 +46,9 @@ public:
 
 	void print()
 	{
-		for(int i = 0; i < 8; i++)
+		for(int i = 0; i < boardSize; i++)
 		{
-			for(int j =0; j < 8; j++)
+			for(int j =0; j < boardSize; j++)
 			{
 				cout << board[i][j]<< " ";
 			}
@@ -101,7 +101,7 @@ public:
 		for(int i = x-1; i >=0; i--)
 		{
 			int _y = y + x -i;
-			if(_y >= 8)
+			if(_y >= size)
 				continue;
 			if(env->board[i][y+x-i]!=0)
 				return false;
@@ -112,7 +112,7 @@ public:
 		for(int i = x+1; i < size; i++)
 		{
 			int _y = y -x+i;
-			if(_y >=8)
+			if(_y >=size)
 				continue;
 			if(env->board[i][_y]!=0)
 				return false;
@@ -152,12 +152,19 @@ typedef Proccessor<Env*,AbstractAction*> Proc;
 
 int main(void) {
 
+	int table_size = 8;
+
+	cout<< "Enter the size of the board: ";
+	cin >> table_size;
+	cout << endl;
+
 	Proc* proc = new Proc();
 
-	Env* env = new Env();
+	Env* env = new Env(table_size);
 
-	for(int i =0; i < 8; i++)
-		for(int j = 0; j < 8; j++)
+	int size = env->boardSize;
+	for(int i =0; i < size; i++)
+		for(int j = 0; j < size; j++)
 			proc->actions.push_back(new Place(i,j));
 
 	if(proc->proccess(env,new Place(0,0)) == false)
