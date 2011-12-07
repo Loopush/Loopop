@@ -9,10 +9,11 @@
 #define QUEENS_HPP_
 
 #include "../Backtracking.hpp"
+#include "../../commons/benchmark/TimeBench.hpp"
 
 using namespace std;
 
-class Env
+class Env: public AbstractEnv
 {
 public:
 	int queensRemaining;
@@ -74,6 +75,9 @@ public:
 
 	bool doAction(AbstractAction::EnvType env)
 	{
+		if(x == -1 && y == -1)
+			return true;
+
 		int size = env->boardSize;
 		for(int i =0; i < size; i++)
 		{
@@ -152,6 +156,7 @@ typedef Proccessor<Env*,AbstractAction*> Proc;
 
 int main(void) {
 
+	TimeBench* tb = new TimeBench();
 	int table_size = 8;
 
 	cout<< "Enter the size of the board: ";
@@ -167,13 +172,19 @@ int main(void) {
 		for(int j = 0; j < size; j++)
 			proc->actions.push_back(new Place(i,j));
 
-	if(proc->proccess(env,new Place(0,0)) == false)
+	tb->openProbe("Computation delay");
+	if(proc->proccess(env,new Place(-1,-1)) == false)
 	{
 		cout <<"Could not solve the problem. "<< endl;
 	}
 
-
 	env->print();
+
+	tb->closeProbe("Computation delay");
+	tb->printProbe("Computation delay");
+
+	delete tb;
+
 	return EXIT_SUCCESS;
 }
 
