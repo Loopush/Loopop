@@ -163,7 +163,7 @@ public:
 
 };
 
-typedef Proccessor<Environment*, Color*> Proc;
+typedef Processor<Environment*, Color*> Proc;
 
 int main(void)
 {

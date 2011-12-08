@@ -10,28 +10,22 @@
 
 #include "../Backtracking.hpp"
 #include "../../commons/benchmark/TimeBench.hpp"
+#include "../../commons/algo/Board.hpp"
+
+typedef Board<int> IntBoard;
 
 using namespace std;
 
-class Env: public AbstractEnv
+class Env: public AbstractEnv,public IntBoard
 {
 public:
 	int queensRemaining;
 
-	int boardSize;
 
-	vector<vector<int> > board;
-
-	Env(int size)
+	Env(int size):IntBoard(size)
 	{
 		queensRemaining = size;
 
-		boardSize = size;
-
-		board.resize(boardSize);
-
-		for(int i =0; i < boardSize; i++)
-			board[i].resize(boardSize);
 	}
 
 	bool isSolved()
@@ -47,11 +41,12 @@ public:
 
 	void print()
 	{
-		for(int i = 0; i < boardSize; i++)
+		int size = getBoard().size();
+		for(int i = 0; i < size; i++)
 		{
-			for(int j =0; j < boardSize; j++)
+			for(int j =0; j < size; j++)
 			{
-				cout << board[i][j]<< " ";
+				cout << getBoard()[i][j]<< " ";
 			}
 			cout << endl;
 		}
@@ -78,64 +73,10 @@ public:
 		if(x == -1 && y == -1)
 			return true;
 
-		int size = env->boardSize;
-		for(int i =0; i < size; i++)
-		{
-			if(env->board[x][i] != 0)
-				return false;
-		}
+		if(env->itemInLine(x) || env->itemInRow(y) || env->itemInDiag(x,y))
+			return false;
 
-		for(int i =0; i < size; i++)
-		{
-			if(env->board[i][y] != 0)
-				return false;
-		}
-
-		//Up and left.
-		for(int i = x-1; i >=0; i--)
-		{
-			int _y = y -x +i;
-			if(_y< 0)
-				continue;
-			if(env->board[i][_y]!=0)
-				return false;
-		}
-
-		//Down left.
-		for(int i = x-1; i >=0; i--)
-		{
-			int _y = y + x -i;
-			if(_y >= size)
-				continue;
-			if(env->board[i][y+x-i]!=0)
-				return false;
-		}
-
-
-		//Down right.
-		for(int i = x+1; i < size; i++)
-		{
-			int _y = y -x+i;
-			if(_y >=size)
-				continue;
-			if(env->board[i][_y]!=0)
-				return false;
-		}
-
-
-		//Up right.
-		for(int i = x+1; i < size; i++)
-		{
-			if(env->board[i][y+x-i]!=0)
-			{
-				int _y = y + x - i;
-				if(_y < 0)
-					continue;
-				return false;
-			}
-		}
-
-		env->board[x][y] = 1;
+		env->getBoard()[x][y] = 1;
 
 
 		env->queensRemaining--;
@@ -146,28 +87,28 @@ public:
 
 	void undoAction(AbstractAction::EnvType env)
 	{
-		env->board[x][y]=0;
+		env->getBoard()[x][y]=0;
 		env->queensRemaining++;
 	}
 
 };
 
-typedef Proccessor<Env*,AbstractAction*> Proc;
+typedef Processor<Env*,AbstractAction*> Proc;
 
 int main(void) {
 
 	TimeBench* tb = new TimeBench();
-	int table_size = 8;
+
+	int size = 8;
 
 	cout<< "Enter the size of the board: ";
-	cin >> table_size;
+	cin >> size;
 	cout << endl;
 
 	Proc* proc = new Proc();
 
-	Env* env = new Env(table_size);
+	Env* env = new Env(size);
 
-	int size = env->boardSize;
 	for(int i =0; i < size; i++)
 		for(int j = 0; j < size; j++)
 			proc->actions.push_back(new Place(i,j));
