@@ -113,7 +113,7 @@ int main(void) {
 		for(int j = 0; j < size; j++)
 			proc->actions.push_back(new Place(i,j));
 
-	tb->openProbe("Computation delay");
+	tb->tic();
 	if(proc->proccess(env,new Place(-1,-1)) == false)
 	{
 		cout <<"Could not solve the problem. "<< endl;
@@ -121,8 +121,7 @@ int main(void) {
 
 	env->print();
 
-	tb->closeProbe("Computation delay");
-	tb->printProbe("Computation delay");
+	tb->toc("Delay");
 
 	delete tb;
 
