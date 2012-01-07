@@ -1,1 +1,12 @@
 Oficcial repository of the team Loopush. Libraries, examples and all that cool stuff written in languages we enjoy.
+
+
+FOLDERS
+    - libs/
+        Custom written libraries in various languages
+    - euler/
+        Solutions to project euler problems. <https://projecteuler.net/>
+    - usaco/
+        Solutions to USA Computing Olympiad Training <http://train.usaco.org/>
+    - mobileapp/
+        Ideas, libraries etc for the mobile project
